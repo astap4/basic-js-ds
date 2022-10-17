@@ -62,7 +62,7 @@ class BinarySearchTree {
   }
 
   find(data) {
-    let current = this.tree;
+    let current = this.root;
     while (current.data != data) {
       if (data < current.data) {
         current = current.left;
