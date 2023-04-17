@@ -107,7 +107,7 @@ class BinarySearchTree {
         return node;
       }
     }
-    this.rootNode = removeNode(this.rootNode, data);
+    this.root = removeNode(this.root, data);
   }
 
   min() {
