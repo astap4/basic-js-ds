@@ -21,8 +21,16 @@ class Queue {
   }
   
   getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    const head = new ListNode(this.#array[0]);
+    console.log(head)
+    let current = head;
+    for (let i = 1; i < this.#array.length; i++) {
+      const node = new ListNode(this.#array[i]);
+      current.next = node;
+      current = current.next;
+    }
+
+    return head
   }
 
   enqueue(value) {
