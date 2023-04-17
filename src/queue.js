@@ -22,7 +22,6 @@ class Queue {
   
   getUnderlyingList() {
     const head = new ListNode(this.#array[0]);
-    console.log(head)
     let current = head;
     for (let i = 1; i < this.#array.length; i++) {
       const node = new ListNode(this.#array[i]);

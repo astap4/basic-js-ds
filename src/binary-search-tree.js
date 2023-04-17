@@ -7,36 +7,38 @@ const { NotImplementedError } = require('../extensions/index.js');
 * using Node from extensions
 */
 class Node {
-  constructor(data) {
-    this.data = data; 
-    this.left = null; 
-    this.right = null; 
+  constructor(value) {
+    this.data = value;
+    this.left = null;
+    this.right = null;
+    this.mainRoot = null;
   }
 }
 class BinarySearchTree {
-  constructor(){
-    this.root = null;
-  }
-  root() {
-    return this.root
+  constructor() {
+    this.mainRoot = null;
   }
 
-  add(data) {
-    let newNode = new Node(data)
-    if(!this.root) {
-      this.root = newNode;
+  root() {
+    return this.mainRoot
+  }
+
+  add(value) {
+    let newNode = new Node(value)
+    if (!this.mainRoot) {
+      this.mainRoot = newNode;
       return;
     }
-    let currentNode = this.root;
-    while(currentNode) {
-      if(newNode.data < currentNode.data) {
-        if(!currentNode.left) {
+    let currentNode = this.mainRoot;
+    while (currentNode) {
+      if (newNode.data < currentNode.data) {
+        if (!currentNode.left) {
           currentNode.left = newNode;
           return
         }
         currentNode = currentNode.left
       } else {
-        if(!currentNode.right) {
+        if (!currentNode.right) {
           currentNode.right = newNode;
           return
         }
@@ -45,54 +47,58 @@ class BinarySearchTree {
     }
   }
 
-  has(data) {
-    node = this.root
-    while(true){
-    if(node === null)
+  has(value) {
+    if (!this.mainRoot) {
       return false;
-    else if(data < node.data){
-      node = node.left;
     }
-    else if(data > node.data){
-      node = node.right;
-    }
-    else
-      return true;
+    let currentNode = this.mainRoot;
+    while (currentNode) {
+      if (value < currentNode.data) {
+        if (!currentNode.left) {
+          return false;
+        }
+        currentNode = currentNode.left
+      } else if (value > currentNode.data) {
+        if (!currentNode.right) {
+          return false;
+        }
+        currentNode = currentNode.right
+      } else {
+        return true
+      }
     }
   }
 
-  find(data) {
-    let current = this.root;
-    while (current.data != data) {
-      if (data < current.data) {
+  find(value) {
+    let current = this.mainRoot;
+    while (current && current.data != value) {
+      if (value < current.data) {
         current = current.left;
       } else {
         current = current.right;
-      }
-      if (current == null) {
-        return null
       }
     }
     return current;
   }
 
-  remove(data) {
-    function removeNode(node, data) {
+  remove(value) {
+    function removeNode(node, value) {
       if (!node) {
         return null;
       } else {
-        if (node.data > data) {
-          node.left = removeNode(node.left, data);
+        if (node.data > value) {
+          node.left = removeNode(node.left, value);
           return node;
-        } else if (node.data < data) {
-          node.right = removeNode(node.right, data);
+        } else if (node.data < value) {
+          node.right = removeNode(node.right, value);
           return node;
         } else {
           if (!node.left && !node.right) {
             return null;
           }
           else if (!node.right) {
-            return node.left;}
+            return node.left;
+          }
           else if (!node.left) {
             return node.right;
           }
@@ -107,15 +113,15 @@ class BinarySearchTree {
         return node;
       }
     }
-    this.root = removeNode(this.root, data);
+    this.mainRoot = removeNode(this.mainRoot, value);
   }
 
   min() {
-    if (!this.root) {
+    if (!this.mainRoot) {
       return null;
     }
 
-    let min = this.root;
+    let min = this.mainRoot;
     while (min.left) {
       min = min.left;
     }
@@ -123,11 +129,11 @@ class BinarySearchTree {
   }
 
   max() {
-    if (!this.root) {
+    if (!this.mainRoot) {
       return;
     }
 
-    let node = this.root;
+    let node = this.mainRoot;
 
     while (node.right) {
       node = node.right;
@@ -135,7 +141,7 @@ class BinarySearchTree {
 
     return node.data;
   }
-  }
+}
 
 
 module.exports = {
